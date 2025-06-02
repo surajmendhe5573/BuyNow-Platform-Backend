@@ -1,8 +1,7 @@
-# E-Commerce Platform Backend
+# BuyNow-Platform-Backend
 
 This project is a backend service for a simple e-commerce platform, providing APIs for user authentication, product management, cart management, and order placement.
 
----
 
 ## Features
 
@@ -16,6 +15,7 @@ This project is a backend service for a simple e-commerce platform, providing AP
 
 ### 2. Product Management
 - **GET /products**: Retrieve a list of products with support for search and filtering.
+- **GET /products/**: Retrieve all products.
 - **GET /products/:id**: Get details of a specific product.
 - **POST /products**: Add a new product (admin-only route).
 - **PUT /products/:id**: Update an existing product (admin-only route).
