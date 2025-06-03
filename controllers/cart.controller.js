@@ -35,7 +35,7 @@ const getCartItems= async(req, res)=>{
     try {
         const cart= await Cart.findOne({userId: req.user.id}).populate('userId', 'name email').populate('items.productId');
 
-        if(!cart){
+        if(!cart || cart.items.length == 0){
             return res.status(404).json({message: 'Cart items not found'});
         }
 
@@ -47,5 +47,55 @@ const getCartItems= async(req, res)=>{
     }
 };
 
+const updateCartItem= async(req, res)=>{
+    try {
+        const {quantity}= req.body;
+        const {itemId}= req.params;
 
-module.exports= {addToCart, getCartItems};
+        const cart= await Cart.findOne({userId: req.user.id});   // Finds the user's cart
+        if(!cart){
+            return res.status(404).json({message: 'Cart item not found'});
+        }
+
+        const item= cart.items.find(item=> item._id.toString() === itemId);  // Finds the specific item in the cart
+        if(!item){
+            return res.status(404).json({message: 'Item not found'});
+        }
+
+        item.quantity= quantity;
+        await cart.save();
+
+        res.status(200).json({message: 'Cart item updated successfully', item});
+        
+    } catch (error) {
+        return res.status(500).json({message: 'Internal server error'});
+    }
+};
+
+const removeCartItem= async(req, res)=>{
+    try {
+        const {itemId}= req.params;
+
+        const cart= await Cart.findOne({userId: req.user.id});
+        if(!cart){
+            return res.status(404).json({message: 'Cart not found'});
+        }
+
+        const initialItemCount = cart.items.length;
+
+        cart.items= cart.items.filter(item=> item._id.toString() !== itemId);   // Removes the specified item
+        
+        if (cart.items.length === initialItemCount) {
+            return res.status(404).json({ message: 'Item not found in cart' });
+        }
+
+        await cart.save();
+        res.status(200).json({ message: 'Item removed from cart successfully'});
+        
+    } catch (error) {
+        return res.status(500).json({message: 'Internal server error'});
+    }
+};
+
+
+module.exports= {addToCart, getCartItems, updateCartItem, removeCartItem};
