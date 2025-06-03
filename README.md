@@ -1,4 +1,4 @@
-# BuyNow-Platform-Backend
+# E-Commerce Platform Backend
 
 This project is a backend service for a simple e-commerce platform, providing APIs for user authentication, product management, cart management, and order placement.
 
@@ -60,7 +60,16 @@ This project is a backend service for a simple e-commerce platform, providing AP
 | PUT    | `/api/products/:id`  | Update a product by ID             | Yes            | Yes        |
 | DELETE | `/api/products/:id`  | Delete a product by ID             | Yes            | Yes        |
 
----
+
+### Cart Routes
+
+| Method | Endpoint         | Description                                    | Authentication |
+|--------|------------------|------------------------------------------------|----------------|
+| GET    | `/api/cart`      | Retrieve all items in the cart for the user    | Yes            |
+| POST   | `/api/cart`      | Add a product to the user's cart               | Yes            |
+| PUT | `/api/cart/:itemId` | Update the quantity of an item in the cart.  | Yes            |
+| DELETE | `/api/cart/:itemId` | Remove a specific item from the user's cart   | Yes            |
+
 
 ## Setup
 
