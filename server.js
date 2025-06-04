@@ -19,5 +19,3 @@ app.use('/api/carts', require('./routes/cart'));
 app.listen(port, ()=>{
     console.log(`Server is running on http://localhost:${port}`);
 });
-
-// this is testing purpoe only
